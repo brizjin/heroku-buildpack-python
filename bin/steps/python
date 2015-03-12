@@ -2,7 +2,7 @@ set +e
 PYTHON_VERSION=$(cat runtime.txt)
 
 # Install Python.
-#if [ -f .heroku/python-version ]; then
+if [ -f .heroku/python-version ]; then
   if [ ! $(cat .heroku/python-version) = $PYTHON_VERSION ]; then
     bpwatch start uninstall_python
       puts-step "Found runtime $(cat .heroku/python-version), removing"
@@ -11,15 +11,15 @@ PYTHON_VERSION=$(cat runtime.txt)
   else
     SKIP_INSTALL=1
   fi
-#fi
+fi
 
-#if [ ! $STACK = $CACHED_PYTHON_STACK ]; then
+if [ ! $STACK = $CACHED_PYTHON_STACK ]; then
   bpwatch start uninstall_python
     puts-step "Stack changed, re-installing runtime"
     rm -fr .heroku/python .heroku/python-stack .heroku/vendor
     unset SKIP_INSTALL
   bpwatch stop uninstall_python
-#fi
+fi
 
 
 if [ ! "$SKIP_INSTALL" ]; then
@@ -32,12 +32,14 @@ if [ ! "$SKIP_INSTALL" ]; then
     puts-step "($PYTHON_VERSION)"
     puts-step "$?"
 
-    OUT_PREFIX=.heroku/python
-    echo "Building PyPy 2.5.0 ..."
-    SOURCE_TARBALL='https://bitbucket.org/pypy/pypy/downloads/pypy-2.5.0-linux64.tar.bz2'
-    curl -L $SOURCE_TARBALL | tar jx
-    cp -R pypy-2.5.0-linux64/* $OUT_PREFIX
-    ln $OUT_PREFIX/bin/pypy $OUT_PREFIX/bin/python
+    source $ROOT_DIR/builds/runtimes/$PYTHON_VERSION .heroku/python
+
+    # OUT_PREFIX=.heroku/python
+    # echo "Building PyPy 2.5.0 ..."
+    # SOURCE_TARBALL='https://bitbucket.org/pypy/pypy/downloads/pypy-2.5.0-linux64.tar.bz2'
+    # curl -L $SOURCE_TARBALL | tar jx
+    # cp -R pypy-2.5.0-linux64/* $OUT_PREFIX
+    # ln $OUT_PREFIX/bin/pypy $OUT_PREFIX/bin/python
     
     #curl https://lang-python.s3.amazonaws.com/$STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zxv -C .heroku/python &> /dev/null
     #if [[ $? != 0 ]] ; then
