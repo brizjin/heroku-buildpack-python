@@ -30,7 +30,6 @@ if [ ! "$SKIP_INSTALL" ]; then
     mkdir -p .heroku/python
 
     #curl https://lang-python.s3.amazonaws.com/$STACK/runtimes/$PYTHON_VERSION.tar.gz -s | tar zxv -C .heroku/python &> /dev/null
-    curl https://bitbucket.org/pypy/pypy/downloads/pypy-2.5.0-linux.tar.bz2 -s | tar zxv -C .heroku/python &> /dev/null
     #if [[ $? != 0 ]] ; then
     #  puts-warn "Requested runtime ($PYTHON_VERSION) is not available for this stack ($STACK)."
     #  puts-warn "Aborting.  More info: https://devcenter.heroku.com/articles/python-support"
@@ -76,14 +75,14 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
 
   bpwatch stop install_pip
 
-  curl https://bitbucket.org/pypy/pypy/downloads/pypy-2.5.0-linux.tar.bz2 -s | tar zxv -C .heroku/python &> /dev/null
-  puts-step "Pip clone"
-  cd $TMPTARDIR
-  git clone https://bitbucket.org/pypy/numpy.git
-  puts-step "Pip install"
-  cd numpy
-  pypy setup.py install
-  puts-step "GOOOD"
+  #curl https://bitbucket.org/pypy/pypy/downloads/pypy-2.5.0-linux64.tar.bz2 -s | tar zxv -C .heroku/python &> /dev/null
+  #puts-step "Pip clone"
+  #cd $TMPTARDIR
+  #git clone https://bitbucket.org/pypy/numpy.git
+  #puts-step "Pip install"
+  #cd numpy
+  #pypy setup.py install
+  #puts-step "GOOOD"
 
   bpwatch stop prepare_environment
 fi

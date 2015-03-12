@@ -36,7 +36,7 @@ SETUPTOOLS_VERSION="11.3.1"
 export PATH=$PATH:$ROOT_DIR/vendor/bpwatch
 LOGPLEX_KEY="t.b90d9d29-5388-4908-9737-b4576af1d4ce"
 export BPWATCH_STORE_PATH=$CACHE_DIR/bpwatch.json
-BUILDPACK_VERSION=v28
+BUILDPACK_VERSION=v29
 
 # Setup pip-pop (pip-diff)
 export PATH=$PATH:$ROOT_DIR/vendor/pip-pop
