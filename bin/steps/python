@@ -43,12 +43,16 @@ if [ ! "$SKIP_INSTALL" ]; then
   echo $STACK > .heroku/python-stack
   FRESH_PYTHON=true
 
+  puts-step "FRESH_PYTHON ($FRESH_PYTHON)"
+
   hash -r
 fi
 
 # If Pip isn't up to date:
 if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
   WORKING_DIR=$(pwd)
+
+  puts-step "WORKING_DIR ($WORKING_DIR)"
 
   bpwatch start prepare_environment
 
@@ -57,7 +61,7 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
 
   bpwatch start install_setuptools
     # Prepare it for the real world
-    # puts-step "Installing Setuptools ($SETUPTOOLS_VERSION)"
+    puts-step "Installing Setuptools ($SETUPTOOLS_VERSION)"
     tar zxf $ROOT_DIR/vendor/setuptools-$SETUPTOOLS_VERSION.tar.gz -C $TMPTARDIR
     cd $TMPTARDIR/setuptools-$SETUPTOOLS_VERSION/
     python setup.py install &> /dev/null
@@ -65,7 +69,7 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
   bpwatch stop install_setuptoools
 
   bpwatch start install_pip
-    # puts-step "Installing Pip ($PIP_VERSION)"
+    puts-step "Installing Pip ($PIP_VERSION)"
     tar zxf $ROOT_DIR/vendor/pip-$PIP_VERSION.tar.gz -C $TMPTARDIR
     cd $TMPTARDIR/pip-$PIP_VERSION/
     python setup.py install &> /dev/null
