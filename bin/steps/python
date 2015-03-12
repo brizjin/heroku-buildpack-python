@@ -52,8 +52,6 @@ fi
 if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
   WORKING_DIR=$(pwd)
 
-  puts-step "WORKING_DIR ($WORKING_DIR)"
-
   bpwatch start prepare_environment
 
   TMPTARDIR=$(mktemp -d)
@@ -76,6 +74,15 @@ if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
     cd $WORKING_DIR
 
   bpwatch stop install_pip
+
+  puts-step "Pip clone"
+  cd $TMPTARDIR
+  git clone https://bitbucket.org/pypy/numpy.git
+  puts-step "Pip install"
+  cd numpy
+  pypy setup.py install
+  puts-step "GOOOD"
+
   bpwatch stop prepare_environment
 fi
 
