@@ -8,8 +8,9 @@ puts-step "Installing dependencies with pip"
 [ ! "$FRESH_PYTHON" ] && bpwatch start pip_install
 [ "$FRESH_PYTHON" ] && bpwatch start pip_install_first
 
-rm -rf .heroku/python/site-packages/gevent
-pip install cython git+git://github.com/surfly/gevent.git#egg=gevent
+#rm -rf .heroku/python/site-packages/gevent
+pip uninstall cython git+git://github.com/surfly/gevent.git#egg=gevent gevent
+pip   install cython git+git://github.com/surfly/gevent.git#egg=gevent
 #pip install gevent
 
 
