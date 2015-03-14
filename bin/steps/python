@@ -59,7 +59,7 @@ if [ ! "$SKIP_INSTALL" ]; then
 
   hash -r
 fi
-apt-get install -y postgresql-client
+
 # If Pip isn't up to date:
 if [ "$FRESH_PYTHON" ] || [[ ! $(pip --version) == *$PIP_VERSION* ]]; then
   WORKING_DIR=$(pwd)
